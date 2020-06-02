@@ -3,8 +3,6 @@ const path = require('path');
 
 const contactsPath = path.join(__dirname, '/db/contacts.json')
 
-console.log('contactsPath', contactsPath)
-
 function listContacts() {
     try {
       return JSON.parse(
@@ -45,11 +43,36 @@ function listContacts() {
       const contacts = listContacts();
       const addNewContact = [
         ...contacts,
-        { name, email, phone, id: contacts.length + 1 },
+        { id: contacts.length + 1, name, email, phone },
       ];
       fs.writeFileSync(contactsPath, JSON.stringify(addNewContact), (err) => {
         if (err) throw err;
       });
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
+
+  function updateContact(body, id) {
+    try {
+      const contactUpdatedIndex = listContacts().findIndex(
+        (contactSearched) => contactSearched.id === id
+      );
+      if (contactUpdatedIndex === -1) {
+        return false;
+      }
+      let contacts = listContacts();
+      contacts[contactUpdatedIndex] = {
+        ...contacts[contactUpdatedIndex],
+        ...body,
+      };
+      const contactUpdatetReturn = contacts[contactUpdatedIndex];
+      fs.writeFileSync(contactsPath, JSON.stringify(contacts), (err) => {
+        if (err) throw err;
+      });
+
+      return contactUpdatetReturn;
+
     } catch (error) {
       console.log("error: ", error);
     }
@@ -60,4 +83,5 @@ function listContacts() {
     getContactById,
     removeContact,
     addContact,
+    updateContact,
   };
