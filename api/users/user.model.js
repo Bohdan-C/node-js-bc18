@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 mongoose.set("useFindAndModify", false);
 
 const userSchema = new Schema({
-  name: { type: String, requiered: true },
+  name: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, required: true },
 });
@@ -13,7 +13,6 @@ userSchema.statics.getAllUsers = getAllUsers;
 userSchema.statics.getUserById = getUserById;
 userSchema.statics.updateUser = updateUser;
 userSchema.statics.deleteUser = deleteUser;
-
 
 const UserModel = mongoose.model("Contact", userSchema);
 async function createUser(userParams) {
