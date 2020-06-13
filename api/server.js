@@ -1,10 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
+
 const cors = require("cors");
 const morgan = require("morgan");
 const usersRouter = require("./users/user.router");
 const cookieParser = require("cookie-parser");
 import { authRouter } from "./auth/auth.router";
+
 module.exports = class Server {
   constructor() {
     this.app = null;
@@ -31,6 +33,7 @@ module.exports = class Server {
     this.app.use("/api", usersRouter);
     this.app.use("/auth", authRouter);
     this.app.use("/users", authRouter);
+    this.app.use("/public", express.static("public"));
   }
 
   async initDatabase() {

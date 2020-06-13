@@ -10,7 +10,6 @@ exports.getAllUsers = async (req, res) => {
     next();
   }
 };
-
 //GET contacts by id
 exports.getUserById = async (req, res, next) => {
   try {
@@ -22,7 +21,6 @@ exports.getUserById = async (req, res, next) => {
     next(err);
   }
 };
-
 
 exports.validateGetUserById = function validateGetUserById(req, res, next) {
   const toValidate = {
