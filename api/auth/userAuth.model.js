@@ -11,6 +11,7 @@ const userSchema = new Schema(
       enum: ["free", "pro", "premium"],
       default: "free",
     },
+    avatarURL: { type: String, required: false },
     token: { type: String, required: false },
   },
   { timestamps: true }
@@ -27,8 +28,8 @@ async function findByToken(token) {
 async function findByEmail(email) {
   return this.findOne({ email });
 }
-async function createUser(email, passwordHash) {
-  return this.create({ email, passwordHash });
+async function createUser(email, passwordHash, subscription, avatarURL) {
+  return this.create({ email, passwordHash, subscription, avatarURL });
 }
 async function updateUser(id, setToken) {
   return this.findByIdAndUpdate(id, { $set: setToken }, { new: true });
